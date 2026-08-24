@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111126" />
+    <title>Moon Moth — Night Flight</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,700;9..144,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <header>
+        <div class="brand"><span class="spark">✦</span> MOON MOTH</div>
+        <button id="soundButton" class="sound" aria-label="Toggle sound">SOUND: OFF</button>
+      </header>
+
+      <section class="hud" aria-label="Game status">
+        <div><span>NECTAR</span><strong id="score">000</strong></div>
+        <div><span>BEST FLIGHT</span><strong id="best">000</strong></div>
+        <div><span>WINGS</span><strong id="lives">♥ ♥ ♥</strong></div>
+      </section>
+
+      <section id="arena" class="arena" aria-label="Moon Moth game area" tabindex="0">
+        <div class="moon"></div>
+        <div class="mist mist-one"></div><div class="mist mist-two"></div>
+        <div id="stars" class="stars"></div>
+        <div id="fireflies"></div>
+        <div id="moth" class="moth" aria-label="Moon moth"><i></i><b></b><em></em></div>
+        <div id="intro" class="intro">
+          <p class="eyebrow">A TINY NIGHT FLIGHT</p>
+          <h1>Follow the<br /><span>glow.</span></h1>
+          <p class="instructions">Guide the moth through the midnight garden.<br />Gather nectar. Avoid the thorn vines.</p>
+          <button id="startButton">BEGIN FLIGHT <span>→</span></button>
+          <p class="keys">MOVE WITH <kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd> OR <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></p>
+        </div>
+        <div id="message" class="message" aria-live="polite"></div>
+      </section>
+
+      <footer><span>COLLECT LIGHT · STAY ALIVE</span><span>© MIDNIGHT GARDEN SOCIETY</span></footer>
+    </main>
+    <script src="game.js"></script>
+  </body>
+</html>
