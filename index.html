@@ -5,10 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#111126" />
     <title>Moon Moth — Night Flight</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,700;9..144,900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+    <style>
+:root { --ink:#101025; --cream:#fff6df; --gold:#ffd56a; --pink:#ff9da8; --violet:#8269e8; }
+* { box-sizing:border-box; } body { margin:0; min-height:100vh; color:var(--cream); background:#0c0b1d; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; display:grid; place-items:center; overflow:hidden; }
+body::before { content:""; position:fixed; inset:0; background:radial-gradient(circle at 85% 0%,#2f2558 0,transparent 33%),radial-gradient(circle at 5% 100%,#312056 0,transparent 36%); }
+.game-shell { width:min(1100px,94vw); position:relative; z-index:1; } header, footer, .hud { display:flex; align-items:center; justify-content:space-between; } header { padding:16px 3px 20px; } .brand { font-size:14px; letter-spacing:.13em; font-weight:500; } .spark { color:var(--gold); font-size:20px; margin-right:8px; }.sound { color:#aaa0cb; background:transparent; border:0; font:inherit; font-size:10px; letter-spacing:.08em; cursor:pointer; }
+.hud { background:#1b1936; border:1px solid rgba(255,255,255,.1); border-bottom:0; padding:12px 7%; } .hud div { display:flex; align-items:baseline; gap:11px; } .hud span { color:#aaa0cb; font-size:9px; letter-spacing:.12em; } .hud strong { font-size:14px; color:var(--gold); font-weight:500; } #lives { color:var(--pink); letter-spacing:2px; }
+.arena { height:min(600px,68vh); min-height:470px; position:relative; isolation:isolate; overflow:hidden; outline:none; cursor:crosshair; background:linear-gradient(135deg,#22214b,#15132d 55%,#261b45); border:1px solid rgba(255,255,255,.12); box-shadow:0 24px 60px #070611aa; }
+.arena::after { content:""; z-index:-1; position:absolute; inset:0; opacity:.35; background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px); background-size:24px 24px; }.moon { position:absolute; width:330px; height:330px; right:8%; top:-122px; border-radius:50%; background:radial-gradient(circle at 36% 38%,#fffbdc 0 3%,#f5df9c 4% 15%,#d0b173 38%,#7e6898 70%); box-shadow:0 0 80px #fbdc8a99; opacity:.8; }.moon::after { content:""; position:absolute; inset:34px 62px 90px 34px; border-radius:50%; background:#ba9d71; opacity:.25; }.mist { position:absolute; height:100px; width:65%; border-radius:50%; filter:blur(22px); opacity:.16; background:#d6c8ff; }.mist-one { left:-15%; bottom:13%; }.mist-two { right:-20%; bottom:31%; }
+.stars { position:absolute; inset:0; background-image:radial-gradient(#fff 1px,transparent 1.8px),radial-gradient(#ffdf88 1px,transparent 1.6px); background-size:71px 73px,107px 109px; background-position:12px 15px,41px 34px; opacity:.6; }.firefly { position:absolute; width:12px; height:12px; border-radius:50%; background:#ffe374; box-shadow:0 0 10px 4px #ffd75b99; animation:float 2.7s ease-in-out infinite; }.thorn { position:absolute; width:65px; height:65px; border:5px solid #a24a78; border-radius:50% 50% 4px 50%; transform:rotate(45deg); box-shadow:0 0 14px #d3549c66; }.thorn::before { content:""; position:absolute; height:50px; width:5px; background:#a24a78; left:27px; top:-39px; }.moth { position:absolute; width:52px; height:36px; z-index:3; filter:drop-shadow(0 0 11px #ffe889cc); transition:filter .1s; }.moth i,.moth b { position:absolute; width:31px; height:31px; background:linear-gradient(145deg,#fff8d4,#efadcc); border-radius:90% 8% 90% 8%; top:2px; }.moth i { left:0; transform:rotate(-28deg); }.moth b { right:0; transform:scaleX(-1) rotate(-28deg); }.moth em { position:absolute; height:31px; width:8px; left:22px; top:7px; background:#5b397b; border-radius:50%; z-index:1; }.moth.flicker { filter:drop-shadow(0 0 20px #fff3a8); }
+.intro { position:absolute; z-index:4; left:9%; top:50%; transform:translateY(-50%); text-align:left; }.eyebrow { color:var(--gold); font-size:10px; letter-spacing:.18em; margin:0 0 8px; }.intro h1 { font:900 clamp(54px,8vw,100px)/.83 Georgia,serif; margin:0; letter-spacing:-.07em; }.intro h1 span { color:var(--pink); font-style:italic; }.instructions { color:#d1cae8; font-size:11px; line-height:1.8; margin:23px 0; } button#startButton { font:500 11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing:.1em; padding:15px 18px; border:1px solid var(--gold); color:#171227; background:var(--gold); cursor:pointer; box-shadow:4px 4px 0 #c98696; transition:transform .15s; } button#startButton:hover { transform:translate(-2px,-2px); } button#startButton span { font-size:17px; margin-left:12px; }.keys { color:#978eb9; font-size:9px; margin-top:21px; } kbd { border:1px solid #71678f; padding:2px 4px; margin-left:3px; color:#d3cced; }.message { position:absolute; z-index:5; text-align:center; left:50%; top:50%; transform:translate(-50%,-50%); font:900 46px/.95 Georgia,serif; color:#fff4d6; text-shadow:0 3px #8d4b78; pointer-events:none; opacity:0; transition:opacity .25s; }.message small { display:block; margin-top:18px; font:500 10px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; color:#d9c8ed; text-shadow:none; letter-spacing:.08em; }.message.show { opacity:1; }.arena.playing .intro { display:none; } footer { padding:14px 3px 0; color:#777092; font-size:8px; letter-spacing:.09em; }
+@keyframes float { 50% { transform:translate(8px,-13px) scale(.75); opacity:.65; } } @media (max-width:600px) { .arena { min-height:520px; } .hud { padding:11px 4%; }.hud div { gap:5px; }.hud span { font-size:7px; }.hud strong { font-size:11px; }.intro { left:8%; top:55%; }.moon { right:-22%; }.keys { max-width:235px; line-height:2.2; } footer span:last-child { display:none; } }
+    </style>
   </head>
   <body>
     <main class="game-shell">
@@ -41,6 +49,30 @@
 
       <footer><span>COLLECT LIGHT · STAY ALIVE</span><span>© MIDNIGHT GARDEN SOCIETY</span></footer>
     </main>
-    <script src="game.js"></script>
+    <script>
+const arena = document.querySelector('#arena');
+const moth = document.querySelector('#moth');
+const scoreEl = document.querySelector('#score');
+const bestEl = document.querySelector('#best');
+const livesEl = document.querySelector('#lives');
+const message = document.querySelector('#message');
+const start = document.querySelector('#startButton');
+const sound = document.querySelector('#soundButton');
+let running = false, score = 0, lives = 3, x = 120, y = 290, entities = [], timer, audioOn = false;
+let best = Number(localStorage.getItem('moon-moth-best') || 0); bestEl.textContent = String(best).padStart(3, '0');
+const keys = new Set();
+const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+function placeMoth() { moth.style.transform = `translate(${x}px, ${y}px)`; }
+function chirp(freq) { if (!audioOn) return; const ctx = new AudioContext(), osc = ctx.createOscillator(), gain = ctx.createGain(); osc.frequency.value = freq; gain.gain.setValueAtTime(.06, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .13); osc.connect(gain).connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime + .13); }
+function make(type) { const el = document.createElement('div'); el.className = type === 'light' ? 'firefly' : 'thorn'; const rect = arena.getBoundingClientRect(); const item = { el, type, x: rect.width + 20, y: 45 + Math.random() * (rect.height - 115), speed: (type === 'light' ? 2.2 : 2.8) + score / 90 }; el.style.left = item.x + 'px'; el.style.top = item.y + 'px'; arena.append(el); entities.push(item); }
+function endGame() { running = false; clearInterval(timer); best = Math.max(best, score); localStorage.setItem('moon-moth-best', best); bestEl.textContent = String(best).padStart(3, '0'); message.innerHTML = `FLIGHT OVER<small>NECTAR GATHERED: ${score}<br>PRESS ENTER TO TRY AGAIN</small>`; message.classList.add('show'); }
+function update() { if (!running) return; const rect = arena.getBoundingClientRect(); const speed = 4.3; if (keys.has('ArrowLeft') || keys.has('a')) x -= speed; if (keys.has('ArrowRight') || keys.has('d')) x += speed; if (keys.has('ArrowUp') || keys.has('w')) y -= speed; if (keys.has('ArrowDown') || keys.has('s')) y += speed; x = clamp(x, 5, rect.width - 55); y = clamp(y, 10, rect.height - 43); placeMoth();
+  entities.forEach(item => { item.x -= item.speed; item.el.style.left = item.x + 'px'; const hit = x + 45 > item.x && x < item.x + 45 && y + 30 > item.y && y < item.y + 45; if (hit) { if (item.type === 'light') { score += 10; scoreEl.textContent = String(score).padStart(3, '0'); moth.classList.add('flicker'); setTimeout(() => moth.classList.remove('flicker'), 120); chirp(770); } else { lives--; livesEl.textContent = '♥ '.repeat(lives).trim() || '—'; chirp(160); if (!lives) endGame(); } item.el.remove(); item.x = -999; } if (item.x < -90) item.el.remove(); }); entities = entities.filter(i => i.x > -90); requestAnimationFrame(update); }
+function launch() { entities.forEach(i => i.el.remove()); entities = []; score = 0; lives = 3; x = 90; y = arena.clientHeight / 2; scoreEl.textContent = '000'; livesEl.textContent = '♥ ♥ ♥'; message.classList.remove('show'); arena.classList.add('playing'); running = true; placeMoth(); clearInterval(timer); timer = setInterval(() => { if (running) make(Math.random() < .67 ? 'light' : 'thorn'); }, 700); requestAnimationFrame(update); arena.focus(); }
+start.addEventListener('click', launch); document.addEventListener('keydown', e => { if (['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','w','a','s','d','Enter'].includes(e.key)) e.preventDefault(); if (e.key === 'Enter' && !running) launch(); keys.add(e.key); }); document.addEventListener('keyup', e => keys.delete(e.key));
+sound.addEventListener('click', () => { audioOn = !audioOn; sound.textContent = `SOUND: ${audioOn ? 'ON' : 'OFF'}`; chirp(520); });
+for (let i = 0; i < 25; i++) { const dot = document.createElement('span'); dot.className = 'firefly'; dot.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;transform:scale(${.15+Math.random()*.25});opacity:.28;animation-delay:-${Math.random()*3}s`; document.querySelector('#fireflies').append(dot); }
+placeMoth();
+    </script>
   </body>
 </html>
